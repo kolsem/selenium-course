@@ -3,12 +3,12 @@ package task11;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 import java.util.concurrent.TimeUnit;
@@ -18,8 +18,8 @@ public class Registration {
 
     @Before
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "driver/chromedriver.exe");
-        driver = new ChromeDriver();
+        System.setProperty("webdriver.gecko.driver", "driver/geckodriver.exe");
+        driver = new FirefoxDriver();
     }
 
     @Test
@@ -37,7 +37,7 @@ public class Registration {
         customerForm.findElement(By.name("address1")).sendKeys("United States");
 
         Select selectCountry = new Select(customerForm.findElement(By.name("country_code")));
-        selectCountry.selectByVisibleText("United States");
+        ((JavascriptExecutor)driver).executeScript("arguments[0].selectedIndex=224; arguments[0].dispatchEvent(new Event('change'))" , selectCountry);
 
 // Не разблокируется поле сразу
 //        Select selectZone = new Select(customerForm.findElement(By.xpath("//select[@name='zone_code']")));
@@ -54,7 +54,7 @@ public class Registration {
 
         //Костыль, только после рефреша страницы поле "Zone/State/Province" разблокируется
         Select selectZone = new Select(driver.findElement(By.xpath("//select[@name='zone_code']")));
-        selectZone.selectByVisibleText("Alabama");
+        selectZone.selectByVisibleText("Alaska");
         driver.findElement(By.name("password")).sendKeys(password);
         driver.findElement(By.name("confirmed_password")).sendKeys(password);
         driver.findElement(By.name("create_account")).click();
