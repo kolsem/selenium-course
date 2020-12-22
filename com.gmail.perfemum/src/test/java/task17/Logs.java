@@ -1,4 +1,4 @@
-package task15;
+package task17;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -41,7 +41,7 @@ public class Logs {
         driver.get("http://localhost/litecart/admin/?app=catalog&doc=catalog&category_id=2");
 
         List<WebElement> allProducts = driver.findElements(By.xpath("//tr[@class='row'][position()>3]/./td[3]/a"));
-        for (int i=0;i < allProducts.size(); i++) {
+        for (int i = 0; i < allProducts.size(); i++) {
             allProducts.get(i).click();
             driver.navigate().back();
             List<LogEntry> logs = driver.manage().logs().get(LogType.BROWSER).getAll();
